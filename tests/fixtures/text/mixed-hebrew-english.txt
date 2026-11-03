@@ -1,0 +1,3 @@
+Hello  עולם , this is a test.שלום
+הקובץ example.com נמצא ב www.site.co.il, והמחיר 1,000 שקל.
+e.g. ת.ז. 12345 and std::vector
