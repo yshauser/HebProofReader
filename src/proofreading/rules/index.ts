@@ -5,6 +5,7 @@ import { punc001 } from "./punctuation/punc001";
 import { punc002 } from "./punctuation/punc002";
 import { punc003 } from "./punctuation/punc003";
 import { punc004 } from "./punctuation/punc004";
+import { punc005 } from "./punctuation/punc005";
 import { space001 } from "./spacing/space001";
 import { space002 } from "./spacing/space002";
 import { space003 } from "./spacing/space003";
@@ -24,10 +25,11 @@ export const initialRules: readonly ProofreadingRule[] = [
   punc002,
   punc003,
   punc004,
+  punc005,
   cons002,
   typo003,
 ];
 
 export const defaultRegistry = createRuleRegistry(initialRules);
 
-export { cons002, punc001, punc002, punc003, punc004, space001, space002, space003, space004, space005, space006, typo003 };
+export { cons002, punc001, punc002, punc003, punc004, punc005, space001, space002, space003, space004, space005, space006, typo003 };

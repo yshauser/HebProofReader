@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Exec(cat)",
-      "Exec(grep)"
+      "Exec(grep)",
+      "Exec(tail)"
     ]
   }
 }

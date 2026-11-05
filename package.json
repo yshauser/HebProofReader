@@ -10,9 +10,13 @@
     "typecheck": "tsc -b",
     "lint": "eslint .",
     "test": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "fixtures:docx": "node --experimental-strip-types scripts/generate-docx-fixtures.ts",
+    "spike:docx": "vitest --run --config spikes/vitest.config.ts"
   },
   "dependencies": {
+    "@xmldom/xmldom": "^0.9.12",
+    "jszip": "^3.10.2",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "zod": "^4.6.7"

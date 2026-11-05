@@ -9,6 +9,12 @@ export interface PlainTextLocation {
   range: TextRange;
 }
 
+/**
+ * A position inside a DOCX document, expressed in the indexing of the original package:
+ * `paragraphIndex` counts w:p elements in document order, `runIndex` counts the runs of that
+ * paragraph, `offsetInRun` is a UTF-16 offset in the run text. `runIndex === -1` means "the
+ * paragraph itself" (used for paragraphs without text, with `offsetInRun === 0`).
+ */
 export interface DocxAnchor {
   paragraphIndex: number;
   runIndex: number;

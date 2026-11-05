@@ -19,7 +19,7 @@ describe("RuleSettings", () => {
     for (const rule of initialRules) {
       expect(screen.getByRole("checkbox", { name: `${rule.id} ${rule.name}` })).toBeChecked();
     }
-    expect(screen.getByText(/12\/12 פעילים/)).toBeInTheDocument();
+    expect(screen.getByText(/13\/13 פעילים/)).toBeInTheDocument();
   });
 
   it("toggles an individual rule", async () => {

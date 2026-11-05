@@ -109,7 +109,13 @@ Correct:   (טקסט)
 
 **Auto-fix:** No.
 
-### HEB-PUNC-005 — Unbalanced quotation marks
+### HEB-PUNC-005 — Unbalanced curly brackets
+
+**Detect:** Missing opening or closing curly bracket.
+
+**Auto-fix:** No.
+
+### HEB-PUNC-006 — Unbalanced quotation marks
 
 **Detect:** Unpaired configured quotation mark types.
 

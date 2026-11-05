@@ -1,0 +1,12 @@
+export { addCommentsToDocx } from "./comments";
+export type { AddCommentsOptions, AddCommentsResult, DocxCommentInput, SkippedComment } from "./comments";
+export { DocxError } from "./errors";
+export type { DocxErrorCode } from "./errors";
+export { commentedFileName } from "./filename";
+export { DEFAULT_DOCX_LIMITS } from "./limits";
+export type { DocxLimits } from "./limits";
+export { parseDocx } from "./parse";
+export type { DocxWarning, ParsedDocx, ParseDocxOptions, UnreadPart } from "./parse";
+export type { UnsupportedElement } from "./ooxml";
+export { DOCX_MIME_TYPE, validateUploadInfo } from "./validate";
+export type { UploadInfo } from "./validate";

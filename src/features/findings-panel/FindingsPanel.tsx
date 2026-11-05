@@ -14,6 +14,8 @@ interface FindingsPanelProps {
   filtered: readonly ReviewedIssue[];
   counts: ReviewCounts;
   overlappingIds: ReadonlySet<string>;
+  /** False for DOCX: findings are exported as comments and fixes are never applied. */
+  allowFixes?: boolean;
   filters: FindingFilters;
   selectedId: string | null;
   onFiltersChange: (filters: FindingFilters) => void;
@@ -42,8 +44,9 @@ function emptyMessage(props: FindingsPanelProps): string | null {
 
 export function FindingsPanel(props: FindingsPanelProps) {
   const { filtered, counts, selectedId } = props;
+  const allowFixes = props.allowFixes ?? true;
   const empty = emptyMessage(props);
-  const hasFixable = props.reviewed.some(({ issue, status }) => issue.autoFixable && (status === "open" || status === "accepted"));
+  const hasFixable = allowFixes && props.reviewed.some(({ issue, status }) => issue.autoFixable && (status === "open" || status === "accepted"));
   return (
     <section className="panel findings" aria-labelledby="findings-title">
       <h2 id="findings-title">ממצאים</h2>
@@ -63,9 +66,11 @@ export function FindingsPanel(props: FindingsPanelProps) {
         <button type="button" onClick={() => props.onStep(1)} disabled={filtered.length === 0}>
           הבא
         </button>
-        <button type="button" onClick={props.onApplyAllSafe} disabled={!hasFixable}>
-          החלת כל התיקונים הבטוחים
-        </button>
+        {allowFixes ? (
+          <button type="button" onClick={props.onApplyAllSafe} disabled={!hasFixable}>
+            החלת כל התיקונים הבטוחים
+          </button>
+        ) : null}
       </div>
       {empty ? (
         <p className="empty" data-testid="findings-empty">
@@ -80,6 +85,7 @@ export function FindingsPanel(props: FindingsPanelProps) {
               text={props.text}
               selected={item.issue.id === selectedId}
               overlapping={props.overlappingIds.has(item.issue.id)}
+              allowFix={allowFixes}
               onSelect={props.onSelect}
               onStatus={props.onStatus}
               onApplyFix={props.onApplyFix}

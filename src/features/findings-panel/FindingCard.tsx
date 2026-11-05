@@ -8,6 +8,8 @@ interface FindingCardProps {
   text: string;
   selected: boolean;
   overlapping: boolean;
+  /** False for sources whose text is never modified (DOCX): the fix button is hidden. */
+  allowFix: boolean;
   onSelect: (id: string) => void;
   onStatus: (id: string, status: ReviewStatus) => void;
   onApplyFix: (id: string) => void;
@@ -21,9 +23,10 @@ const ACTION_LABELS: Record<ReviewStatus, string> = {
   ignored: "השמטה",
 };
 
-export function FindingCard({ item, text, selected, overlapping, onSelect, onStatus, onApplyFix }: FindingCardProps) {
+export function FindingCard({ item, text, selected, overlapping, allowFix, onSelect, onStatus, onApplyFix }: FindingCardProps) {
   const { issue, status } = item;
   const { line, column } = offsetToLineColumn(text, issue.range.start);
+  const location = issue.sourceLocation.kind === "docx" ? `פסקה ${issue.sourceLocation.start.paragraphIndex + 1}` : `שורה ${line}, עמודה ${column}`;
   const isInsertion = issue.range.start === issue.range.end;
   const suggestion = issue.suggestion === undefined ? undefined : issue.suggestion === "" ? "(הסרה)" : visibleText(issue.suggestion);
 
@@ -61,8 +64,9 @@ export function FindingCard({ item, text, selected, overlapping, onSelect, onSta
           {isInsertion ? "הוספה" : "מקור"}
           {suggestion !== undefined ? <> · הצעה: <bdi>{suggestion}</bdi></> : null}
           {" · "}
-          {issue.autoFixable ? "תיקון אוטומטי בטוח" : "ללא תיקון אוטומטי"}
-          {" · "}שורה {line}, עמודה {column}
+          {issue.autoFixable ? (allowFix ? "תיקון אוטומטי בטוח" : "תיקון בטוח (אינו מוחל על DOCX)") : "ללא תיקון אוטומטי"}
+          {" · "}
+          {location}
         </span>
       </button>
       <div className="finding__actions" role="group" aria-label={`פעולות עבור ${issue.ruleId}`}>
@@ -76,7 +80,7 @@ export function FindingCard({ item, text, selected, overlapping, onSelect, onSta
             {ACTION_LABELS[target]}
           </button>
         ))}
-        {issue.autoFixable ? (
+        {issue.autoFixable && allowFix ? (
           <button type="button" className="primary" onClick={() => onApplyFix(issue.id)}>
             החלת תיקון
           </button>
